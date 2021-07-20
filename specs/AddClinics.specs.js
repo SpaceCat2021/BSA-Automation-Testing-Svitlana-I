@@ -3,7 +3,7 @@
 
 const { expect } = require('chai');
 
-const rundomNumber = () => Date.now();
+const rundomNumber = () => Math.floor(Math.random() * 10000).toString();
 
 describe('Add a clinic:', function () {
 
@@ -18,7 +18,7 @@ describe('Add a clinic:', function () {
     const signInButton = await $('button');
 
     await emailField.waitForDisplayed({ timeout: 5000 });
-    await emailField.setValue(`john_admin1@admin.com`);   // Zlata20001Doc@gmail.com     `Zlata${rundomNumber()}@gmail.com`
+    await emailField.setValue(`john_admin1@admin.com`); 
 
     await passwordField.waitForDisplayed({ timeout: 5000 }); 
     await passwordField.setValue('Pa55word');                               
@@ -73,14 +73,14 @@ expect(urlEdit).to.be.eql('http://46.101.234.121/clinics');
 
 // Ввод данных в поля clinics
 
-const nameСlinics = await $('input[name="name"]');   // данный тест проходит с ошибкой 
+const nameСlinics = await $('input[name="name"]');   
 const addressСlinics = await $('input[name="address"]');
 
 await nameСlinics.waitForDisplayed({ timeout: 5000 });
-await nameСlinics.setValue('Mount Sinai Hospital NY');
+await nameСlinics.setValue('Mount Sinai Hospital${rundomNumber()}NY');
 
 await addressСlinics.waitForDisplayed({ timeout: 5000 });
-await addressСlinics.setValue('1190 Manhattan');
+await addressСlinics.setValue('1190${rundomNumber()}Manhattan');
 
 
 const ddls = await $$('div.selectStyles__control.css-6h7vey-control'); 
