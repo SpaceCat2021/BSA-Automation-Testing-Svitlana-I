@@ -39,8 +39,7 @@ describe('User Profile:', function () {
 //профиль 
     await browser.pause(2000); 
 
-    const myProfile = await $('a.link_link__3zEN3=My Profile');  // меню My Profile button выход  <a class="link_link__3zEN3 link_active__2yhrp" href="/user-profile/1a704228-5201-4244-b5a3-72329c8c4ec9" aria-current="page">My Profile</a>  ('div.header_pagesSection__2Rgck"><a class="link_link__3zEN3" href="/doctors">Doctors</a><a class="link_link__3zEN3" href="/clinics">Clinics</a><a class="link_link__3zEN3 link_active__2yhrp" href="/user-profile/1a704228-5201-4244-b5a3-72329c8c4ec9" aria-current="page">My Profile</a><a class="link_link__3zEN3" href="/my-chats">My Chats</a></div>
-    
+    const myProfile = await $('a.link_link__3zEN3=My Profile');  // меню My Profile button выход
     await myProfile.waitForDisplayed({ timeout: 5000 });
     await myProfile.click(); 
 
@@ -48,7 +47,7 @@ describe('User Profile:', function () {
 
 // корректировка данных доктора 
 
-    const ddls = await $$('div.selectStyles__control.css-6h7vey-control');  // меню  <div class="selectStyles__control 
+    const ddls = await $$('div.selectStyles__control.css-6h7vey-control');  // меню 
 
     const specialtyDdl = ddls[0];  //  Select specialty:/    для каждого меню своя переменная 
     const clinicDdl = ddls[1];  //  Select Clinic:/    для каждого меню своя переменная 
@@ -86,32 +85,43 @@ describe('User Profile:', function () {
 
     await clinicButton.waitForDisplayed({ timeout: 5000 });
     await clinicButton.click();
+     
+// проверка изменения данных
+    await browser.pause(5000);   
 
+    const newSpecialty = await $('div.selectStyles__single-value.css-1uccc91-singleValue');
+    const newSpecialtyText = await newSpecialty.getText();
+    expect(newSpecialtyText).to.be.eql('Surgeon');   
+
+    const newClinic = await $('.styles_selectFormWrapper__1UXSB .selectStyles__single-value');
+    const newClinicText = await newClinic.getText();
+
+    expect(newClinicText).to.be.eql('New York-Presbyterian Hospital-Columbia And Cornell');
 // выход 
 
-const menuButton = await $('button.styles_btn___s1BB.styles_medium-round__3KyFO.styles_gray-light__3fTxu.styles_expand__23Rf0');  // меню-выподающее  button выход
+  const menuButton = await $('button.styles_btn___s1BB.styles_medium-round__3KyFO.styles_gray-light__3fTxu.styles_expand__23Rf0');  // меню-выподающее  button выход
     
-await menuButton.waitForDisplayed({ timeout: 5000 });
-await menuButton.click(); 
+  await menuButton.waitForDisplayed({ timeout: 5000 });
+  await menuButton.click(); 
 
-await browser.pause(2000);   
-const logoutButton = await $('button.styles_btn___s1BB=Logout');  // кнопка logout выход
-await logoutButton.waitForDisplayed({ timeout: 5000 });
-await logoutButton.click();
+  await browser.pause(2000);   
+  const logoutButton = await $('button.styles_btn___s1BB=Logout');  // кнопка logout выход
+  await logoutButton.waitForDisplayed({ timeout: 5000 });
+  await logoutButton.click();
 
-await browser.waitUntil(
-  async function () {
-    const urlIn = await browser.getUrl();
-    return urlIn === 'http://46.101.234.121/sign-in';
-  },
-  { timeout: 5000 },
-);
+  await browser.waitUntil(
+    async function () {
+      const urlIn = await browser.getUrl();
+      return urlIn === 'http://46.101.234.121/sign-in';
+    },
+    { timeout: 5000 },
+  );
 
-const urlIn = await browser.getUrl();
-expect(urlIn).to.be.eql('http://46.101.234.121/sign-in');    
+  const urlIn = await browser.getUrl();
+  expect(urlIn).to.be.eql('http://46.101.234.121/sign-in');    
 
-await browser.pause(5000);   
-await browser.reloadSession();
+  await browser.pause(5000);   
+  await browser.reloadSession();
 
 });
 
