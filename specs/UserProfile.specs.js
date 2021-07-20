@@ -87,31 +87,42 @@ describe('User Profile:', function () {
     await clinicButton.waitForDisplayed({ timeout: 5000 });
     await clinicButton.click();
 
+// проверка изменения данных
+    await browser.pause(5000);   
+
+    const newSpecialty = await $('div.selectStyles__single-value.css-1uccc91-singleValue');
+    const newSpecialtyText = await newSpecialty.getText();
+    expect(newSpecialtyText).to.be.eql('Surgeon');   
+
+    const newClinic = await $('.styles_selectFormWrapper__1UXSB .selectStyles__single-value');
+    const newClinicText = await newClinic.getText();
+
+    expect(newClinicText).to.be.eql('New York-Presbyterian Hospital-Columbia And Cornell');
 // выход 
 
-const menuButton = await $('button.styles_btn___s1BB.styles_medium-round__3KyFO.styles_gray-light__3fTxu.styles_expand__23Rf0');  // меню-выподающее  button выход
+  const menuButton = await $('button.styles_btn___s1BB.styles_medium-round__3KyFO.styles_gray-light__3fTxu.styles_expand__23Rf0');  // меню-выподающее  button выход
     
-await menuButton.waitForDisplayed({ timeout: 5000 });
-await menuButton.click(); 
+  await menuButton.waitForDisplayed({ timeout: 5000 });
+  await menuButton.click(); 
 
-await browser.pause(2000);   
-const logoutButton = await $('button.styles_btn___s1BB=Logout');  // кнопка logout выход
-await logoutButton.waitForDisplayed({ timeout: 5000 });
-await logoutButton.click();
+  await browser.pause(2000);   
+  const logoutButton = await $('button.styles_btn___s1BB=Logout');  // кнопка logout выход
+  await logoutButton.waitForDisplayed({ timeout: 5000 });
+  await logoutButton.click();
 
-await browser.waitUntil(
-  async function () {
-    const urlIn = await browser.getUrl();
-    return urlIn === 'http://46.101.234.121/sign-in';
-  },
-  { timeout: 5000 },
-);
+  await browser.waitUntil(
+    async function () {
+      const urlIn = await browser.getUrl();
+      return urlIn === 'http://46.101.234.121/sign-in';
+    },
+    { timeout: 5000 },
+  );
 
-const urlIn = await browser.getUrl();
-expect(urlIn).to.be.eql('http://46.101.234.121/sign-in');    
+  const urlIn = await browser.getUrl();
+  expect(urlIn).to.be.eql('http://46.101.234.121/sign-in');    
 
-await browser.pause(5000);   
-await browser.reloadSession();
+  await browser.pause(5000);   
+  await browser.reloadSession();
 
 });
 
