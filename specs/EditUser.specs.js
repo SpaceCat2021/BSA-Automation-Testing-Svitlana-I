@@ -39,7 +39,6 @@ describe('Edit data user:', function () {
     expect(urlDoc).to.be.eql('http://46.101.234.121/doctors');
 
 //профиль 
-    await browser.pause(2000); 
 
     const myProfile = await $('a.link_link__3zEN3=My Profile');  
     
@@ -73,21 +72,15 @@ expect(urlEdit).to.be.eql('http://46.101.234.121/user-profile/1a704228-5201-4244
 
 // Корректировка профиля
 
-//const usernameFieldEd = await $('input[name="name"]');   // данный тест проходит с ошибкой 
 const surnameFieldEd = await $('input[name="surname"]');
-
-await browser.pause(2000); 
 
 const phoneFieldEd = await $('input[name="phone"]');    
 
-//await usernameFieldEd.waitForDisplayed({ timeout: 5000 });
-//await usernameFieldEd.setValue('ZlataZlata');
-
 await surnameFieldEd.waitForDisplayed({ timeout: 5000 });
-await surnameFieldEd.setValue('ZlatZlata');                   //(`Zlat${rrundomPhone()}Z`);          
+await surnameFieldEd.setValue('ZlatZlata');                       
 
 await phoneFieldEd.waitForDisplayed({ timeout: 5000 });
-await phoneFieldEd.setValue('387770007007');                  // (`38777${rrundomPhone()}7777`);
+await phoneFieldEd.setValue('387770007007');                  
 
 await browser.pause(2000);
 
@@ -99,6 +92,18 @@ await browser.pause(2000);
      await buttonEdit.click(); 
 
      await browser.pause(2000);
+
+// проверка edit
+
+    const newSurnameFieldEd = await $('span.styles_name__2vTNE');
+    const newSurnameFieldEdText = await newSurnameFieldEd.getText();
+    expect(newSurnameFieldEdText).to.be.eql(`Zlata Zlat-Zlata`);                 
+
+    const newPhoneFieldEd = await $('a.styles_text__1HrCV');
+    const newPhoneFieldEdText = await newPhoneFieldEd.getText();
+    expect(newPhoneFieldEdText).to.be.eql('387770007007');    
+
+    await browser.pause(2000); 
 
 // выход 
 
